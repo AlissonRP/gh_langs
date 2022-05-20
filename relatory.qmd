@@ -1,0 +1,55 @@
+---
+title: "Linguagens de Programação"
+author: "Alisson Rosa"
+date: "5/22/2021"
+format: pdf
+execute:
+  warning: false
+  echo: false
+---
+
+
+# Introdução
+Linguagens de programação nós permitem fornecer regras a quais os computadores entendem, ao longo do tempo foram surgindo inúmeras linguagens com propósitos e estruturas diferentes, aqui vamos analisar o comportamento dessas linguagens no GitHub (gh), que hoje é uma das principais plataformas para versionamento de códigos, assim vamos avaliar:
+
+* Quantidade de *issues* em repositórios que contém tais linguagens ao longo do tempo  
+* Quantidade de *pull requests* (pr) em repositórios que contém tais linguagens ao longo do tempo
+* Quantidade totais de reposítórios das linguagens.
+
+
+
+```{julia}
+using DataFrames
+import CSV
+using Plots
+using Statistics
+using PrettyTables
+
+
+pr = DataFrame(CSV.File("data/prs.csv"));
+issues = DataFrame(CSV.File("data/issues.csv"));
+total = DataFrame(CSV.File("data/repos.csv"));
+
+```
+Precisamos primeiro notar que até ` existiam  linguagens disponíveis no gh, assim aqui vamos avaliar as top 5 linguagens e R em quantidade de repositórios 
+
+```{julia}
+total |>
+d -> sort(d, order(:num_repos, rev=true)) |>
+     d -> first(d, 5) |> 
+     d -> select(d, :"language" => :"Linguagem",:"num_repos" => :"N") |> 
+     d -> bar(d.Linguagem,d.N)
+```
+
+
+# Análise descritiva
+
+# Linguagens Globalmente 
+Avaliar nessa seção as top 10 linguagens + R
+# Linguagens para Dados
+Aqui vamos avaliar Julia, R e Python
+
+# Conclusão momentânea 
+
+# Referências
+
