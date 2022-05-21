@@ -5,7 +5,6 @@ date: "5/22/2021"
 format: pdf
 execute:
   warning: false
-  echo: false
 ---
 
 
@@ -22,8 +21,9 @@ Linguagens de programação nós permitem fornecer regras a quais os computadore
 using DataFrames
 import CSV
 using Plots
+#theme(:vibrant)
 using Statistics
-using PrettyTables
+using Pipe: @pipe
 
 
 pr = DataFrame(CSV.File("data/prs.csv"));
@@ -34,16 +34,17 @@ total = DataFrame(CSV.File("data/repos.csv"));
 Precisamos primeiro notar que até ` existiam  linguagens disponíveis no gh, assim aqui vamos avaliar as top 5 linguagens e R em quantidade de repositórios 
 
 ```{julia}
-total |>
-d -> sort(d, order(:num_repos, rev=true)) |>
-     d -> first(d, 5) |> 
-     d -> select(d, :"language" => :"Linguagem",:"num_repos" => :"N") |> 
-     d -> bar(d.Linguagem,d.N)
+@pipe total |>
+sort(_, order(:num_repos, rev=true)) |>
+     first(_, 5) |> 
+     select(_, :"language" => :"Linguagem",:"num_repos" => :"N")  |> 
+     df -> bar(df.Linguagem, df.N, fill=["#f3ff33", "#337aff", "#ff5e33", "#55ff33", "#233cad"],
+     formatter = identity, series_annotation = df.N)
 ```
 
 
 # Análise descritiva
-
+Primeiro vamos começar avaliando o comportamento médio dos 
 # Linguagens Globalmente 
 Avaliar nessa seção as top 10 linguagens + R
 # Linguagens para Dados
