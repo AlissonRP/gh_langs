@@ -5,6 +5,7 @@ date: "5/22/2021"
 format: pdf
 execute:
   warning: false
+lang: pt
 ---
 
 
@@ -15,12 +16,14 @@ Linguagens de programação nós permitem fornecer regras a quais os computadore
 * Quantidade de *pull requests* (pr) em repositórios que contém tais linguagens ao longo do tempo
 * Quantidade totais de reposítórios das linguagens.
 
-
+Todo código a ser desenvolvido  aqui será  usando a linguagem Julia.
 
 ```{julia}
+include("utils.jl")
 using DataFrames
 import CSV
 using Plots
+default(formatter=identity, tickfontsize = 7, titlefontsize=12)
 #theme(:vibrant)
 using Statistics
 using Pipe: @pipe
@@ -31,22 +34,44 @@ issues = DataFrame(CSV.File("data/issues.csv"));
 total = DataFrame(CSV.File("data/repos.csv"));
 
 ```
-Precisamos primeiro notar que até ` existiam  linguagens disponíveis no gh, assim aqui vamos avaliar as top 5 linguagens e R em quantidade de repositórios 
+Precisamos primeiro notar que até ` existiam  linguagens disponíveis no gh, assim aqui vamos avaliar as top 5 linguagens e R[^1] em quantidade de repositórios 
+
+
+
+
+[^1]: R, pois certas pessoas curtem R, certo.. Certo??
 
 ```{julia}
+#| fig-cap: "Top 5 Linguagens em quantidade de repositórios"
 @pipe total |>
-sort(_, order(:num_repos, rev=true)) |>
-     first(_, 5) |> 
-     select(_, :"language" => :"Linguagem",:"num_repos" => :"N")  |> 
-     df -> bar(df.Linguagem, df.N, fill=["#f3ff33", "#337aff", "#ff5e33", "#55ff33", "#233cad"],
-     formatter = identity, series_annotation = df.N)
+      sort(_, order(:num_repos, rev=true)) |>
+      first(_, 5) |>
+      select(_, :"language" => :"Linguagem", :"num_repos" => :"N") |>
+      df -> bar(df.Linguagem, df.N, fill=["#f3ff33", "#337aff",
+                "#ff5e33", "#55ff33", "#233cad"],
+            series_annotation=df.N)
+           
 ```
 
 
 # Análise descritiva
-Primeiro vamos começar avaliando o comportamento médio dos 
+Primeiro vamos começar avaliando o comportamento médio do gh ao longo dos anos
+
+```{julia}
+#| fig-cap: "Comportamento médio  ao longo dos anos"
+
+p1 = @pipe top_5(issues,:year) |> 
+           areaplot(_[:,:year],_[:,:media], title="pr", label= "prs", legend=:topleft)
+p2 = @pipe top_5(pr,:year)  |>
+           areaplot(_[:,:year],_[:,:media], title="issues", color = "#ff4933", label= "issues", legend=:topleft)
+           
+plot(p1,p2,layout= (1,2))
+```
+
+
 # Linguagens Globalmente 
 Avaliar nessa seção as top 10 linguagens + R
+
 # Linguagens para Dados
 Aqui vamos avaliar Julia, R e Python
 
