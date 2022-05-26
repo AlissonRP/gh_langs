@@ -100,28 +100,31 @@ Primeiro vamos começar avaliando o comportamento médio do gh ao longo dos anos
 p1 = @pipe top_5(issues,:year) |> 
            areaplot(_[:,:year],_[:,:media], title="pr", label= "prs", legend=:topleft)
 p2 = @pipe top_5(pr,:year)  |>
-           areaplot(_[:,:year],_[:,:media], title="issues", color = "#ff4933", label= "issues", legend=:topleft)
+           areaplot(_[:,:year],_[:,:media], title="issues", color = "#ff4933", 
+           label= "issues", legend=:topleft)
            
 plot(p1,p2,layout= (1,2))
 ```
 
 
 \section{Linguagens Globalmente}
-Avaliar nessa seção as top 10 linguagens + R
+Aqui vamos avaliar o comportamento de 5 linguagens: Java, JavaScript, PHP, Python e R. Pelo gráfico xxx, podemos ter um vislumbre do comportamento de prs para essas linguagens ao longo do tempo
+
+```{julia}
+fav_langs(pr, ["TypeScript","Python", "JavaScript", "Ruby", "PHP"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+```
+Note que JavaScript domina desde o começo, porém Python avançou muito nos últimos anos, e em 2021 finalmente ultrapassou JavaScript, outra linguagem que andou tendo um decréscimo considerável é PHP. Vale ressaltar o pico de todas as linguagens em 2017, e depois um levo decréscimo, mas somente PHP e Ruby continuaram caindo consideravelmente nos últimos anos.
 
 \section{Linguagens para Dados}
 Nessa seção vamos avaliar o comportamento especificamente de R e Julia, que são duas das três principais linguagens para trabalhar com dados no momento.
 
-\subsection{Leve introdução}
+\subsection{Breve Introdução}
 R tem suas raízes na estatística, mas depois do desenvolvimento de certos pacotes se tornou um ambiente propicio para ciência de dados. Julia por outro lado, não nasceu fundamentalmente para a estatística, porém como possui as características principais de  ser **rápida** e **fácil** de usar, não demorou para aparecer inúmeros pacotes para análise de dados.  
 Vamos começar avaliando a quantidade total de repositórios para cada uma das duas linguagens.  
 Podemos ver que R possuí muito mais repositórios disponíveis no gh, porém R é uma linguagem que está a bastante tempo no mercado, Julia possui apenas 10 anos de idade..
 
-```{julia}
-using PrettyTables
-total[findall(in(["R","Julia"]), total[!,:language]), :]  |> 
-  d -> pretty_table(d; header = ["Language", "num_repos"], backend = Val(:latex))
-```
+
 
 Agora vamos ver o comportamento das duas linguagens ao longo dos últimos anos
 
@@ -153,7 +156,8 @@ plot(p1,p2,layout=(1,2))
 
 Assim pela figura notamos que: Uma imagem vale mais que mil palavras
 
-# Conclusão momentânea 
+\section{Conclusão momentânea}
 
 # Referências
+
 
