@@ -70,6 +70,7 @@ Shell & 638068\\
 Python & 548870\\
 \hline
 \end{tabular}
+\caption{\label{tab:table-name} Top 5 Linguagens em quantidade de repositórios.}
 \end{table}
 
 
@@ -92,7 +93,7 @@ Notamos que as top 3 linguagens, são de desenvolvimento web, sendo elas JavaScr
 
 
 \section{Análise descritiva}
-Primeiro vamos começar avaliando o comportamento médio do gh ao longo dos anos
+Primeiro vamos começar avaliando o comportamento médio de prs e issues no gh ao longo dos anos. Notamos alguns pontos fundamentais, tanto prs e issues crescem até atingir seu ápice em 2017, mas as issues diferentes dos prs não descressem de forma monótona depois de 2017.
 
 ```{julia}
 #| fig-cap: "Comportamento médio  ao longo dos anos"
@@ -105,24 +106,35 @@ p2 = @pipe top_5(pr,:year)  |>
            
 plot(p1,p2,layout= (1,2))
 ```
-
+Mas no gráfico ref, avaliamos o comportamento das issues e prs no gh de forma global, independente da linguagem, será que as linguagens individualmente se comportam da mesma maneira? É isso que veremos nas seções seguintes
 
 \section{Linguagens Globalmente}
-Aqui vamos avaliar o comportamento de 5 linguagens: Java, JavaScript, PHP, Python e R. Pelo gráfico xxx, podemos ter um vislumbre do comportamento de prs para essas linguagens ao longo do tempo
+Aqui vamos avaliar o comportamento de 5 linguagens: Java, JavaScript, PHP, Python, Ruby. Pelo gráfico xxx, podemos ter um vislumbre do comportamento de prs para essas linguagens ao longo do tempo
 
 ```{julia}
-fav_langs(pr, ["TypeScript","Python", "JavaScript", "Ruby", "PHP"]) |> 
+#| fig-cap: "Comportamento médio  de prs"
+fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |> 
       df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
 ```
-Note que JavaScript domina desde o começo, porém Python avançou muito nos últimos anos, e em 2021 finalmente ultrapassou JavaScript, outra linguagem que andou tendo um decréscimo considerável é PHP. Vale ressaltar o pico de todas as linguagens em 2017, e depois um levo decréscimo, mas somente PHP e Ruby continuaram caindo consideravelmente nos últimos anos.
+Note que JavaScript domina desde o começo, porém Python avançou muito nos últimos anos, e em 2021 finalmente ultrapassou JavaScript, outra linguagem que andou tendo um decréscimo considerável é PHP. Vale ressaltar o pico de todas as linguagens em 2017, e depois um levo decréscimo, mas somente PHP e Ruby continuaram caindo consideravelmente nos últimos anos. 
 
+Pelo gráfico, nota-se que Ruby tem um comportamento diferente em termos de issues que em prs, pois fica abaixo de todas as linguagens praticamente em todos os anos, Java para issues está mais próximo de Python do que estava em termos de prs, e Java depois de 2017 só decresce em issues, algo que não aconteceu em prs.
+
+```{julia}
+#| fig-cap: "Comportamento médio  de issues"
+fav_langs(issues, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+```
+Notamos portanto um comportamento bem claro, prs cresceram até atingir seu apogeu em 2017, aonde depois, em geral tende a cair, a única das linguagens das estudadas que recuperou crescimento foi Java. As issues em uma análise global tinham crescimento mesmo após 2017, porém nas linguagens estudadas nessa seção, não foi o que aconteceu.
 \section{Linguagens para Dados}
 Nessa seção vamos avaliar o comportamento especificamente de R e Julia, que são duas das três principais linguagens para trabalhar com dados no momento.
 
 \subsection{Breve Introdução}
-R tem suas raízes na estatística, mas depois do desenvolvimento de certos pacotes se tornou um ambiente propicio para ciência de dados. Julia por outro lado, não nasceu fundamentalmente para a estatística, porém como possui as características principais de  ser **rápida** e **fácil** de usar, não demorou para aparecer inúmeros pacotes para análise de dados.  
+R é uma implementação open-source da Linguagem [S](https://en.wikipedia.org/wiki/S_(programming_language)) teve seu lançamento oficial em 1995, sendo desenvolvida por [Ross Ihaka](https://en.wikipedia.org/wiki/Ross_Ihaka) e [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician)), sendo assim seu nome "R" vem da letra inicial do seus criadores e também do dialeto com "S". R tem suas raízes na estatística computacional, passou seus 10 primeiros anos sendo primariamente uma linguagem acadêmica  mas depois do desenvolvimento de certos pacotes se tornou um ambiente propicio para ciência de dados. 
+
+O projeto da linguagem Julia teve seu início nos meados de 2009, onde foi lançada oficialmente em 2012, sendo assim, no momento que o autor vos escreve Julia está fazendo 10 anos, é uma linguagem que tem a característica de ser **rápida** e **fácil** de usar, mesmo com somente 10 anos de idade Julia já é usada pela NASA e também pelo INPE.
 Vamos começar avaliando a quantidade total de repositórios para cada uma das duas linguagens.  
-Podemos ver que R possuí muito mais repositórios disponíveis no gh, porém R é uma linguagem que está a bastante tempo no mercado, Julia possui apenas 10 anos de idade..
+Podemos ver que R possui  muito mais repositórios disponíveis no gh, porém R é uma linguagem que está a bastante tempo no mercado, Julia possui apenas 10 anos de idade..
 
 
 
