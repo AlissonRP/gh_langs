@@ -4,23 +4,14 @@ subtitle: "No GitHub"
 author: "Alisson Rosa"
 format: 
     revealjs:
-        theme: dark
+        theme: default
         preview-links: auto
         chalkboard: true
         transition: fade
         controls: true
 
 ---
-```{r}
-options(digits=3)  #Arrendodamento
-options(scipen=999)
-library(tidyverse)
-ggplot2::theme_set(ggplot2::theme_minimal()+ theme(legend.position="none",
-    axis.text.x = element_text(colour="white"),
-    axis.text.y = element_text(colour="white"))) 
-knitr::opts_chunk$set(echo=F,message=F,warning=F,fig.pos = 'H',fig.align = 'center',fig.width=11, fig.height=6)
-scale_fill_discrete = \(...) ggplot2::scale_fill_brewer(... , palette="Set2")
-```
+
 ## O que vai ser falado
 
 ::: {.incremental}
@@ -43,43 +34,39 @@ scale_fill_discrete = \(...) ggplot2::scale_fill_brewer(... , palette="Set2")
 
 # Introdução e conceitos
 
-![](https://c.tenor.com/JNGtStZqQOEAAAAC/tony-tony-chopper-chopper.gif){.absolute top=410 right=300 width="450" height="850"}
+![](https://64.media.tumblr.com/fd78d2273868df6b7942540b6180fc49/53d1aba819c3c65b-42/s500x750/099d22117cde4ceabfaad45b08813c00ccb16501.gifv){.absolute top=410 right=300 width="450" height="850"}
 
 ## Introdução 
  
 
-```{r}
-issue = read_csv("data/issues.csv")
-pr = read_csv("data/prs.csv")
-total = read_csv("data/repos.csv")
+```{julia}
+
+include("utils.jl")
+using DataFrames
+import CSV
+using Plots
+default(formatter=identity, tickfontsize=7, titlefontsize=12,
+legend=:topleft)
+theme(:vibrant)
+using Statistics
+using Pipe: @pipe
+using PrettyTables
+tf_html_dark
+
+pr = DataFrame(CSV.File("data/prs.csv"));
+issues = DataFrame(CSV.File("data/issues.csv"));
+total = DataFrame(CSV.File("data/repos.csv"));
 ```
 
-::: {.panel-tabset}
+
 
 ### Repos DataSet
 
-```{r}
-total |> 
-    DT::datatable(style = "bootstrap4")
+```{julia}
+pretty_table(pr; backend = Val(:html), header = (names(pr)))
 ```
 
 
-### Pull Requests DataSet
-
-```{r}
-pr |> 
-    DT::datatable()
-```
-
-
-
-### Issues DataSeT
-
-```{r}
-issue |> 
-    DT::datatable()
-```
-:::
 
 
 ## Conceitos
@@ -95,7 +82,6 @@ issue |>
 * Pull Request (pr)
 
 
-:::
 
 
 
@@ -104,213 +90,125 @@ issue |>
 
 
 # Linguagens Gerais
-- Top 5 em repositórios 
+- Top 5 em quantidade de repositórios 
 - Issues e pr ao longo do tempo
 ![](a-Grayscale-image-of-character-A-b-Binary-representation-of-character-A-c.ppm.png){.absolute top=410 left=310  width="450" height="250"}
 
 ## Top 5 
-```{r}
-options(digits=3)  #Arrendodamento
-options(scipen=999)
-library(ggplot2)
-ggplot2::theme_set(ggplot2::theme_minimal()+ theme(legend.position="none",
-    axis.text.x = element_text(colour="white"),
-    axis.text.y = element_text(colour="white"))) 
-knitr::opts_chunk$set(echo=F,message=F,warning=F,fig.pos = 'H',fig.align = 'center',fig.width=11, fig.height=6)
-scale_fill_discrete = \(...) ggplot2::scale_fill_brewer(... , palette="Set2")
+
+
+
+
+
+
+
+```{julia}
+#| echo: true
+@pipe total |>
+      sort(_, order(:num_repos, rev=true)) |>
+      first(_, 5) |>
+      select(_, :"language" => :"Linguagem", :"num_repos" => :"N") |>
+      df -> bar(df.Linguagem, df.N, fill=["#f3ff33","#337aff","#ff5e33", 
+                "#55ff33","#233cad"], legend=false)  
+@pipe  total |> 
+      filter(:language =>  ==("R"), _) |> 
+       df -> bar!(df[:,:language] , df[:,:num_repos], legend=false)
 ```
 
-```{r}
 
 
+## Algumas linguagens 
 
-(total |> 
-  head(5) |> 
-  bind_rows(total |> filter(language == "R")) |> 
-  ggplot(aes(language, num_repos, fill = language)) +
-  geom_bar(stat = 'identity') + 
-  labs(x = '', y = 'Total Repositórios'))   |> 
-  plotly::ggplotly()  |> 
-    plotly::layout(plot_bgcolor  = "rgba(0, 0, 0, 0)",
-           paper_bgcolor = "rgba(0, 0, 0, 0)",
-           fig_bgcolor   = "rgba(0, 0, 0, 0)")
-```
 
-```{r}
-
+```{julia}
+#| echo: true
+fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
 ```
 
 ---
-## Função 
+# Linguagem para "Dados"
 
+## Linguagem Julia
 
+::: {.incremental}
+- Lançada oficialmente em 2012
 
-## Pressupostos e Teoria
-* Toda teoria possue pressupostos
-
-
-$$
-\text{Pressupostos} \rightarrow \text{Teoria}
-$$
-
-* Em regressão linear existem vários, mas o principal a ser falado aqui é sobre o pressuposto de normalidade do erro.
-
-## Normalidade
-
-* Fácilidade para fazer Inferência
-* Convergência dos estimadores
-* Nem sempre é satisfeita
-
-
-![](https://i.gifer.com/1srZ.gif){.absolute top=410 right=350 width="250" height="250"}
-
-## Proposta
-
-* Desenvolver o modelo de regressão quantílico Chen
-* Reparametrização da distribuição
-$$
-g(\mu) = \sum_i \beta_{i} X_{i}
-$$
-
-* Resíduo Quantílico
-
-$$
-\phi^{-1}(F(y_t;\hat{\lambda}, \hat{\mu}, \tau))
-$$
-
-
-
-# Programação e Pacotes
-
-## Why I need this?
-* **Outras** pessoas usarem
-* Escolha de design
-
-
-```r
-modelo <- f(dados, formula, quantil, link)
-```
-* O que o objeto retorna quando foi ajustado?
-* Como resumir a informação?
-
-# Comparação
-::: {.panel-tabset}
-
-### Meu modelo
-```r
-modelo = chen_reg.fit(Y ~ ., data = chenReg::simu[, -1], tau = 0.5, link = "log")
-modelo
-```
-```{r}
-library(chenReg)
-chen_reg.fit(Y ~ ., data = chenReg::simu[, -1], tau = 0.5, link = "log")
-```
-### Linear model
-```r
-linear = lm(formula = y ~ x, data = dados)
-linear
-```
-```{r}
-x = 1:16 
-y = 2*x + 3
-dados = data.frame(x=x,y=y)
-lm(y~x, data = dados)
-```
-
-:::
-
-
-
-# Resumo do ajuste
-
-::: {.panel-tabset}
-
-### Meu modelo
-
-```{.python code-line-numbers="|1-6|"}
-#>             Estimate Std. Error  z value Pr(>|z|)
-#> lambda        0.9690     0.0162  59.9251        0
-#> (Intercept)  -0.1632     0.0254   6.4333        0
-#> V2            2.5776     0.0179 144.1890        0
-#> V3           -2.0559     0.0156 131.4870        0
-#> V4            3.1060     0.0218 142.7914        0
-#>  
-#> Log-likelihood: -429.106 
-#> Number of iterations in BFGS optim: 95 
-#> AIC: 868.212  BIC: 886.7309  RMSE: 1.3304 
-#> Residuals:
-#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#> -3.0327 -0.8555 -0.1335 -0.1578  0.4892  2.3589 
-#> R-squared: 0.9841
-```
-### Linear model
-```r
-#> Call:
-#> lm(formula = y ~ x)
-#> 
-#> Residuals:
-#>        Min         1Q     Median         3Q        Max 
-#> -7.277e-16 -3.862e-16 -2.228e-16  1.521e-16  1.283e-15 
-#> 
-#> Coefficients:
-#>              Estimate Std. Error   t value Pr(>|t|)    
-#> (Intercept) 3.000e+00  3.204e-16 9.363e+15   <2e-16 ***
-#> x           2.000e+00  3.314e-17 6.036e+16   <2e-16 ***
-#> ---
-#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#> 
-#> Residual standard error: 6.11e-16 on 14 degrees of freedom
-#> Multiple R-squared:      1,  Adjusted R-squared:      1 
-#> F-statistic: 3.643e+33 on 1 and 14 DF,  p-value: < 2.2e-16
-```
-:::
-## Um mundo melhor
-* Um oferecimento [mypdf1](https://github.com/AlissonRP/mypdf1)
-
-
-
-
-```{r}
-modelo = chen_reg.fit(Y ~ ., data = chenReg::simu[, -1], tau = 0.5, link = "log")
-chenReg::chen_summary(modelo) |> 
-mypdf1::pdf1_tbl('')
-```
-
-
-![](https://github.com/AlissonRP/mypdf1/blob/main/man/figures/fig/mypdf1.png?raw=true){.absolute top=20 right=50 width="150" height="150"}
-
-
-## Elementos fundamentais 
-
-* Documentação
-
-
-
-
-* Dependências
-
-
-* Testes
-```r
-#> Test passed 😸
-```
 <br />
 
-* Automatização
+- Aglomerar tudo de bom que outras linguagens tinham 
+
+<br />
+
+- **RÁPIDA COMO C, FÁCIL DE USAR COMO PYTHON**
+
+<br />
+
+:::
 
 
 
 
-# Aplicação web
+## Linguagem R
+::: {.incremental}
+- Lançada oficialmente em 1995
+
+<br />
+
+- Inicialmente lançada com proposito de análise estatística
+
+<br />
+
+- ![](https://i.pinimg.com/originals/a2/3f/b9/a23fb94724ad59225252e68bbd981629.gif){.absolute top=310 left=370 width="380" height="280"}
+
+:::
+
+
+## Total de repositórios
+
+```{julia}
+#| echo: true
+total[findall(in(["R", "Julia"]), total[:, :language]), :] |>
+df -> bar(df[:, :language], df[:, :num_repos], g=df[:, :language],
+        fill=["#2B5FE9", "#AA30FF"], legend=:topleft)
+```
+
+
+## Issues e Prs
 
 
 
-## Por quê não ficar somente no pacote?
+```{julia}
+p1 = fav_langs(pr, ["R","Julia"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name], title = "Pull Requests")
+p2 = fav_langs(issues, ["R","Julia"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name], title = "Issues")
 
-* Localmente
-* Mais fácil?
-* Consequência: Atinge um público maior  
-* Shiny
+plot(p1,p2,layout=(1,2))
+
+```
+
+
+
+
+
+# Mas e Python?
+
+## 
+```{julia}
+p1 = fav_langs(pr, ["R","Julia","Python"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+p2 = fav_langs(issues, ["R","Julia", "Python"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+
+plot(p1,p2,layout=(1,2))
+
+```
+
+::: footer
+Uma imagem vale mais que mil palavras
+:::
+
 
 
 
@@ -322,19 +220,18 @@ mypdf1::pdf1_tbl('')
 ::: {.incremental}
 
 :::
-![](https://i.imgur.com/KIuSkwe.gif){.absolute top=310 left=370 width="380" height="250"}
+![](https://i.imgur.com/KIuSkwe.gif){.absolute top=330 left=370 width="380" height="250"}
 
 ::: footer
-Não use Beamer
+Como pode o mundo usar Python?
 :::
 
 ## Referências
 
-![](https://images-na.ssl-images-amazon.com/images/I/71NMYEJefqL.jpg){.absolute top=90 left=10 width="280" height="350"}
-![](https://images-na.ssl-images-amazon.com/images/I/41Ef5vs3aOS._SX379_BO1,204,203,200_.jpg){.absolute top=90 right=10 width="280" height="350"}
-![](https://m.media-amazon.com/images/I/51eTKL+SkeL.jpg){.absolute top=300 right=370 width="280" height="320"}
+![](https://juliadatascience.io/im/let_fig_front_cover_Use_lazy_loading_to_keep_homepage_speed_high_.svg){.absolute top=90 left=10 width="280" height="350"}
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Julia_prog_language.svg/1200px-Julia_prog_language.svg.png){.absolute top=330 right=370 width="240" height="320"}
 
 
 ::: footer
-In Hadley Wickham we trust
+Leia sempre a documentação!
 :::
