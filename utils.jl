@@ -20,3 +20,6 @@ fav_langs = function (df::DataFrame, langs::Vector)
           combine(_, :count => (mean => :media))
 
 end
+
+lag(x) = [x[i] - x[i-1] for i in 2:length(x)]
+
