@@ -798,6 +798,17 @@ Código
 </section>
 <section id="section-5" class="slide level2">
 <h2></h2>
+<details>
+<summary>
+Código
+</summary>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1"></a>p1 <span class="op">=</span> <span class="fu">fav_langs</span>(pr, [<span class="st">"R"</span>,<span class="st">"Julia"</span>,<span class="st">"Python"</span>]) <span class="op">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name])</span>
+<span id="cb7-3"><a href="#cb7-3"></a>p2 <span class="op">=</span> <span class="fu">fav_langs</span>(issues, [<span class="st">"R"</span>,<span class="st">"Julia"</span>, <span class="st">"Python"</span>]) <span class="op">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name])</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="fu">plot</span>(p1, p2, layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 
 <img data-src="index_files/figure-revealjs/cell-11-output-1.svg" class="r-stretch"><div class="footer">
 <p>Uma imagem vale mais que mil palavras</p>

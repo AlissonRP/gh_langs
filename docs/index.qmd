@@ -326,6 +326,22 @@ plot(p1,p2,layout=(1,2))
 # Mas e Python?
 
 ## 
+
+<details>
+  <summary markdown="span">Código</summary>
+
+
+```julia
+p1 = fav_langs(pr, ["R","Julia","Python"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+p2 = fav_langs(issues, ["R","Julia", "Python"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+
+plot(p1, p2, layout=(1,2))
+
+```
+</details>
+
 ```{julia}
 p1 = fav_langs(pr, ["R","Julia","Python"]) |> 
       df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
