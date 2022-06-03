@@ -9,6 +9,8 @@ format:
         chalkboard: true
         transition: fade
         controls: true
+        width: 1220
+        height: 700
 
 ---
 
@@ -51,7 +53,7 @@ theme(:vibrant)
 using Statistics
 using Pipe: @pipe
 using PrettyTables
-tf_html_dark
+
 
 pr = DataFrame(CSV.File("data/prs.csv"));
 issues = DataFrame(CSV.File("data/issues.csv"));
@@ -62,14 +64,35 @@ total = DataFrame(CSV.File("data/repos.csv"));
 
 ## Repos DataSet
 
+:::: {.columns}
+
+::: {.column width="60%"}
+
+$\rightarrow$ Pull requests
 ```{julia}
-pretty_table(pr |> df -> first(df, 6); backend = Val(:html), header = (names(pr)))
+pretty_table(pr |> df -> first(df, 7); backend = Val(:html), header = (names(pr)))
+```
+:::
+
+::: {.column width="40%"}
+$\rightarrow$ Repositórios
+```{julia}
+pretty_table(total  |> df -> first(df, 7); backend = Val(:html), header = (names(total)),tf=tf_html_dark)
+```
+:::
+
+::::
+
+
+
+```{julia}
+#pretty_table(pr |> df -> first(df, 7); backend = Val(:html), header = (names(pr)))
 ```
 
 ## total DataSet
 
 ```{julia}
-pretty_table(total  |> df -> first(df, 6); backend = Val(:html), header = (names(total)))
+#pretty_table(total  |> df -> first(df, 7); backend = Val(:html), header = (names(total)))
 ```
 
 
@@ -89,7 +112,7 @@ pretty_table(total  |> df -> first(df, 6); backend = Val(:html), header = (names
 
 
 
-
+![](memes/ggplot.jpg){.absolute top=130 right=10 width="480" height="450"}
 
 
 
@@ -98,7 +121,7 @@ pretty_table(total  |> df -> first(df, 6); backend = Val(:html), header = (names
 # Linguagens Gerais
 - Top 5 em quantidade de repositórios 
 - Issues e pr ao longo do tempo
-![](a-Grayscale-image-of-character-A-b-Binary-representation-of-character-A-c.ppm.png){.absolute top=410 left=310  width="450" height="250"}
+
 
 ## Top 5 
 
@@ -113,10 +136,10 @@ pretty_table(total  |> df -> first(df, 6); backend = Val(:html), header = (names
       first(_, 5) |>
       select(_, :language => :"Linguagem", :num_repos => :"N") |>
       df -> bar(df.Linguagem, df.N, fill=["#f3ff33","#337aff","#ff5e33", 
-                "#55ff33","#233cad"], legend=false)  
+                "#55ff33","#233cad"], legend=false, size=(1200,700))  
 @pipe  total |> 
       filter(:language =>  ==("R"), _) |> 
-       df -> bar!(df[:,:language] , df[:,:num_repos], legend=false)
+       df -> bar!(df[:,:language] , df[:,:num_repos], legend=false, size=(1200,700))
 ```
 
 </details>
@@ -124,7 +147,8 @@ pretty_table(total  |> df -> first(df, 6); backend = Val(:html), header = (names
 
 
 
-```{julia}
+```{julia, fig-align="center" , width="150%"}
+#| fig-height: 1
 @pipe total |>
       sort(_, order(:num_repos, rev=true)) |>
       first(_, 5) |>
@@ -217,7 +241,7 @@ fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |>
 
 <br />
 
-- ![](https://i.pinimg.com/originals/a2/3f/b9/a23fb94724ad59225252e68bbd981629.gif){.absolute top=310 left=370 width="380" height="280"}
+- ![](memes/Documents.jpg){.absolute top=310 left=370 width="380" height="280"}
 
 :::
 
@@ -268,6 +292,8 @@ Uma imagem vale mais que mil palavras
 :::
 
 ## Quando algo termina, algo começa.
+
+- Devo aprender Julia?
 
 ::: {.incremental}
 

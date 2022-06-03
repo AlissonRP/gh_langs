@@ -46,7 +46,7 @@ issues = DataFrame(CSV.File("data/issues.csv"));
 total = DataFrame(CSV.File("data/repos.csv"));
 
 ```
-Precisamos primeiro notar que existiam mais de 400 linguagens disponíveis  no gh até 2021, assim vamos avaliando  as top 5 linguagens e R[^1] em quantidade de repositórios 
+Precisamos primeiro notar que existiam mais de 400 linguagens disponíveis  no gh até 2021, assim vamos começar avaliando  as top 5 linguagens e R[^1] em quantidade de repositórios 
 
 
 
@@ -84,7 +84,7 @@ Notamos que as top 3 linguagens são de desenvolvimento web, sendo elas JavaScri
 @pipe total |>
       sort(_, order(:num_repos, rev=true)) |>
       first(_, 5) |>
-      select(_, :"language" => :"Linguagem", :"num_repos" => :"N") |>
+      select(_, :language => :Linguagem, :num_repos => :N) |>
       df -> bar(df.Linguagem, df.N, fill=["#f3ff33", "#337aff",
                 "#ff5e33", "#55ff33", "#233cad"],
             series_annotation=df.N, legend=false)  
@@ -133,6 +133,22 @@ fav_langs(issues, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |>
 Notamos portanto, um comportamento bem claro, prs cresceram até atingir seu apogeu em 2017, aonde depois, em geral tendem a cair, as únicas  linguagens das estudadas que recuperaram crescimento foram Java e Python. Como vimos antes na  análise global, as issues somente decrescem depois de 2017 e o mesmo aconteceu individualmente para as linguagens estudadas aqui.
 \section{Linguagens para Dados}
 Nessa seção vamos avaliar o comportamento especificamente de R e Julia, que são duas das três principais linguagens para trabalhar com dados no momento.
+Vimos que issues decrescem a partir de 2017 monotonicamente de forma geral e também para as linguagens estudadas nessa subseção, a portanto nos informa quais as 5 linguagens mantiveram mais anos de crescimento após 2017
+
+```{julia}
+lagged = @pipe issues[issues.year.>2016, :] |>
+               groupby(_, [:year, :name]) |>
+               combine(_, :count => (mean => :media)) |>
+               groupby(_, :name) |>
+               combine(_, :media => (lag => :lag));
+lagged[:, :lag] = @pipe ifelse.(lagged[:, :lag] .> 0, 1, 0);
+@pipe lagged |>
+      groupby(_, :name) |>
+      combine(_, :lag => sum) |>
+      sort(_, :lag_sum, rev=true) |>
+      first(_, 5)
+```
+Temos portanto 3 das 5 linguagens que tiveram 3 anos de crescimento de issues se comparado ao ano anterior, ou seja: nenhuma delas manteou-se crescente desde o começo.
 
 \subsection{Breve Introdução}
 R é uma implementação open-source da Linguagem [S](https://en.wikipedia.org/wiki/S_(programming_language)), teve seu lançamento oficial em 1995, sendo desenvolvida por [Ross Ihaka](https://en.wikipedia.org/wiki/Ross_Ihaka) e [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician)), sendo assim seu nome "R" vem da letra inicial do seus criadores e também do dialeto com "S". R tem suas raízes na estatística computacional, passou seus 10 primeiros anos sendo primariamente uma linguagem acadêmica,  mas depois do desenvolvimento de  pacotes como `tidyverse` se tornou um ambiente propicio para ciência de dados. 
@@ -166,7 +182,7 @@ plot(p1,p2,layout=(1,2))
 Nota-se que em 2014 Julia teve mais prs e issues que R e ambas as linguagens atingem seu pico em 2017, um comportamento global como vimos anteriormente, porém para issues Julia teve mais de 2012 até 2014 e também seu pico de issues foi em 2016 e não 2017 como R.
 
 \subsection{Python entra no game}
-Evidentemente não podemos esquecer de Python pois como vimos está no top 5 de linguagens mais repositórios disponíveis, atualmente  conta com vários pacotes para análise de dados, e é a principal linguagem para deep learning, então é claro que não poderia faltar a comparação com suas concorrentes nesse ramo. 
+Evidentemente não podemos esquecer de Python, pois como vimos está no top 5 de linguagens com mais repositórios disponíveis, atualmente  conta com vários pacotes para análise de dados, e é a principal linguagem para deep learning, então é claro que não poderia faltar a comparação com suas concorrentes nesse ramo. Notamos que há uma diferença desproporcional em termos de prs e issues a comparação com R e Julia.
 
 ```{julia}
 p1 = fav_langs(pr, ["R","Julia","Python"]) |> 
@@ -178,7 +194,7 @@ plot(p1,p2,layout=(1,2))
 
 ```
 
-Como Python tem é de proposito geral,
+Sabemos que Python é de proposito geral e uma linguagem bem estabelecida, então evidentemente tende a ocupar mais espaço que R e Julia. Um ponto fundamental, é que se filtrarmos em repositórios com vies de análise de dados/ machine learning, será que Python tende a manter essa distância das outras linguagens? Infelizmente tal filtragem seria puramente arbitrária, pois como definimos o que é um repositório de análise de dados? Qualquer maneira de definir pode facilmente não incluir pontos relevantes, assim a resposta para a pergunta anterior fica a cargo do leitor. 
 
 \section{Conclusão momentânea}
 Vimos que JavaScript leva vantagem de todas as linguagens em todos os anos, e também fica claro a discrepância que JavaScript tem das outras linguagens, pois pela @fig-plot vemos que o valor médio geral para pr e issues é muito inferior que o de JavaScript, Python vem brigando pela superioridade com JavaScript ao longo dos anos, sendo que em 2021 o superou nas métricas estudadas aqui.
