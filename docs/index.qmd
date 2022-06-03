@@ -34,7 +34,7 @@ format:
 
 # Introdução e conceitos
 
-![](https://64.media.tumblr.com/fd78d2273868df6b7942540b6180fc49/53d1aba819c3c65b-42/s500x750/099d22117cde4ceabfaad45b08813c00ccb16501.gifv){.absolute top=410 right=300 width="450" height="850"}
+![](http://31.media.tumblr.com/17fea920ff36ef4f5b877d5216a7aad9/tumblr_mo9xje8zZ41qcbiufo1_1280.gif){.absolute top=410 right=300 width="450" height="850"}
 
 ## Introdução 
  
@@ -60,10 +60,16 @@ total = DataFrame(CSV.File("data/repos.csv"));
 
 
 
-### Repos DataSet
+## Repos DataSet
 
 ```{julia}
-pretty_table(pr; backend = Val(:html), header = (names(pr)))
+pretty_table(pr |> df -> first(df, 6); backend = Val(:html), header = (names(pr)))
+```
+
+## total DataSet
+
+```{julia}
+pretty_table(total  |> df -> first(df, 6); backend = Val(:html), header = (names(total)))
 ```
 
 
@@ -97,17 +103,15 @@ pretty_table(pr; backend = Val(:html), header = (names(pr)))
 ## Top 5 
 
 
+<details>
+  <summary markdown="span">Código</summary>
 
 
-
-
-
-```{julia}
-#| echo: true
+```julia
 @pipe total |>
       sort(_, order(:num_repos, rev=true)) |>
       first(_, 5) |>
-      select(_, :"language" => :"Linguagem", :"num_repos" => :"N") |>
+      select(_, :language => :"Linguagem", :num_repos => :"N") |>
       df -> bar(df.Linguagem, df.N, fill=["#f3ff33","#337aff","#ff5e33", 
                 "#55ff33","#233cad"], legend=false)  
 @pipe  total |> 
@@ -115,19 +119,73 @@ pretty_table(pr; backend = Val(:html), header = (names(pr)))
        df -> bar!(df[:,:language] , df[:,:num_repos], legend=false)
 ```
 
+</details>
+
+
+
+
+```{julia}
+@pipe total |>
+      sort(_, order(:num_repos, rev=true)) |>
+      first(_, 5) |>
+      select(_, :language => :"Linguagem", :num_repos => :"N") |>
+      df -> bar(df.Linguagem, df.N, fill=["#f3ff33","#337aff","#ff5e33", 
+                "#55ff33","#233cad"], legend=false)  
+@pipe  total |> 
+      filter(:language =>  ==("R"), _) |> 
+       df -> bar!(df[:,:language] , df[:,:num_repos], legend=false)
+```
+
+## Médias
+<details>
+  <summary markdown="span">Código</summary>
+
+
+```julia
+p1 = @pipe top_5(issues,:year) |> 
+           areaplot(_[:,:year],_[:,:media], title="issues", label=false, legend=:topleft)
+p2 = @pipe top_5(pr,:year)  |>
+           areaplot(_[:,:year],_[:,:media], title="pr", color = "#ff4933", 
+           label=false, legend=:topleft)
+           
+plot(p1,p2,layout= (1,2))
+```
+</details>
+
+
+```{julia}
+p1 = @pipe top_5(issues,:year) |> 
+           areaplot(_[:,:year],_[:,:media], title="issues", label=false, legend=:topleft)
+p2 = @pipe top_5(pr,:year)  |>
+           areaplot(_[:,:year],_[:,:media], title="pr", color = "#ff4933", 
+           label=false, legend=:topleft)
+           
+plot(p1,p2,layout= (1,2))
+```
 
 
 ## Algumas linguagens 
 
+<details>
+  <summary markdown="span">Código</summary>
+
+
+```julia
+
+fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+```
+
+</details>
 
 ```{julia}
-#| echo: true
+#| echo: false
 fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |> 
       df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
 ```
 
 ---
-# Linguagem para "Dados"
+# Linguagem "para" Dados
 
 ## Linguagem Julia
 
@@ -209,29 +267,22 @@ plot(p1,p2,layout=(1,2))
 Uma imagem vale mais que mil palavras
 :::
 
-
-
-
-## {background-iframe="https://trends.google.com/trends/explore?date=2008-04-27%202022-05-27&q=Julia%20language,R%20language" background-interactive="true"}
-
-
 ## Quando algo termina, algo começa.
 
 ::: {.incremental}
 
 :::
-![](https://i.imgur.com/KIuSkwe.gif){.absolute top=330 left=370 width="380" height="250"}
-
-::: footer
-Como pode o mundo usar Python?
-:::
-
-## Referências
-
-![](https://juliadatascience.io/im/let_fig_front_cover_Use_lazy_loading_to_keep_homepage_speed_high_.svg){.absolute top=90 left=10 width="280" height="350"}
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Julia_prog_language.svg/1200px-Julia_prog_language.svg.png){.absolute top=330 right=370 width="240" height="320"}
+![](https://i.pinimg.com/originals/0f/a0/94/0fa09464c343885355e6aa4d2f4a88b5.gif){.absolute top=330 left=370 width="380" height="250"}
 
 
-::: footer
-Leia sempre a documentação!
-:::
+
+
+## {background-iframe="https://docs.julialang.org/en/v1/" background-interactive="true"}
+
+
+
+
+
+
+![](https://juliadatascience.io/im/let_fig_front_cover_Use_lazy_loading_to_keep_homepage_speed_high_.svg){.absolute top=90 right=10 width="280" height="350"}
+
