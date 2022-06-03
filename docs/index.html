@@ -420,11 +420,36 @@
 </section>
 <section id="introdução" class="slide level2">
 <h2>Introdução</h2>
+<ul>
+<li>Base de dados disponível no <a href="https://www.kaggle.com/datasets/isaacwen/github-programming-languages-data">kaggle</a></li>
+</ul>
+<p><br></p>
+<ul>
+<li>Três datasets</li>
+</ul>
+<p><br></p>
+<ul>
+<li>Quais linguagens tem mais destaque dentro do GitHub?</li>
+</ul>
 </section>
-<section id="repos-dataset" class="slide level2">
-<h2>Repos DataSet</h2>
+<section id="conceitos" class="slide level2">
+<h2>Conceitos</h2>
+<ul>
+<li>Repositório</li>
+</ul>
+<p><br></p>
+<ul>
+<li>Issues</li>
+</ul>
+<p><br></p>
+<ul>
+<li>Pull Request (pr)</li>
+</ul>
+</section>
+<section id="datasets" class="slide level2">
+<h2>Datasets</h2>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:59%;">
 <p><span class="math inline">\(\rightarrow\)</span> Pull requests</p>
 <div class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
@@ -530,7 +555,7 @@
 
 </div>
 </div>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:41%;">
 <p><span class="math inline">\(\rightarrow\)</span> Repositórios</p>
 <div class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
@@ -625,34 +650,27 @@
 </div>
 </div>
 </section>
-<section id="total-dataset" class="slide level2">
-<h2>total DataSet</h2>
-</section>
-<section id="conceitos" class="slide level2">
-<h2>Conceitos</h2>
+<section id="disclaimer" class="slide level2">
+<h2>Disclaimer</h2>
 <ul>
-<li>Repositório</li>
+<li>Nem tudo funcionou como deveria funcionar</li>
 </ul>
-<p><br></p>
+<div>
 <ul>
-<li>Issues:</li>
+<li class="fragment"><img data-src="memes/ggplot.jpg" class="absolute" style="top: 210px; right: 250px; width: 480px; height: 450px; "></li>
 </ul>
-<p><br></p>
-<ul>
-<li>Pull Request (pr)</li>
-</ul>
-<p><img data-src="memes/ggplot.jpg" class="absolute" style="top: 130px; right: 10px; width: 480px; height: 450px; "></p>
+</div>
 </section></section>
 <section>
 <section id="linguagens-gerais" class="title-slide slide level1 center">
 <h1>Linguagens Gerais</h1>
 <ul>
 <li>Top 5 em quantidade de repositórios</li>
-<li>Issues e pr ao longo do tempo</li>
+<li>Média de issues e pr ao longo do tempo</li>
 </ul>
 </section>
-<section id="top-5" class="slide level2">
-<h2>Top 5</h2>
+<section id="section" class="slide level2">
+<h2></h2>
 <details>
 <summary>
 Código
@@ -668,9 +686,9 @@ Código
 <span id="cb1-9"><a href="#cb1-9"></a>       df <span class="op">-&gt;</span> <span class="fu">bar!</span>(df[<span class="op">:</span>,<span class="op">:</span>language] , df[<span class="op">:</span>,<span class="op">:</span>num_repos], legend<span class="op">=</span><span class="cn">false</span>, size<span class="op">=</span>(<span class="fl">1200</span>,<span class="fl">700</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
-<img data-src="index_files/figure-revealjs/cell-7-output-1.svg" class="r-stretch"></section>
-<section id="médias" class="slide level2">
-<h2>Médias</h2>
+<img data-src="index_files/figure-revealjs/cell-5-output-1.svg" class="r-stretch"></section>
+<section id="section-1" class="slide level2">
+<h2></h2>
 <details>
 <summary>
 Código
@@ -684,22 +702,19 @@ Código
 <span id="cb2-7"><a href="#cb2-7"></a><span class="fu">plot</span>(p1,p2,layout<span class="op">=</span> (<span class="fl">1</span>,<span class="fl">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
-<img data-src="index_files/figure-revealjs/cell-8-output-1.svg" class="r-stretch"></section>
-<section id="algumas-linguagens" class="slide level2">
-<h2>Algumas linguagens</h2>
+<img data-src="index_files/figure-revealjs/cell-6-output-1.svg" class="r-stretch"></section>
+<section id="section-2" class="slide level2">
+<h2></h2>
 <details>
 <summary>
 Código
 </summary>
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1"></a></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="fu">fav_langs</span>(pr, [<span class="st">"Java"</span>,<span class="st">"Python"</span>, <span class="st">"JavaScript"</span>, <span class="st">"Ruby"</span>, <span class="st">"PHP"</span>]) <span class="op">|&gt;</span> </span>
-<span id="cb3-3"><a href="#cb3-3"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name], formatter<span class="op">=</span>identity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
-<img data-src="index_files/figure-revealjs/cell-9-output-1.svg" class="r-stretch"></section>
-<section class="slide level2">
-
-</section></section>
+<img data-src="index_files/figure-revealjs/cell-7-output-1.svg" class="r-stretch"></section></section>
 <section>
 <section id="linguagem-para-dados" class="title-slide slide level1 center">
 <h1>Linguagem “para” Dados</h1>
@@ -733,33 +748,44 @@ Código
 <li class="fragment">Inicialmente lançada com proposito de análise estatística</li>
 </ul>
 <p><br></p>
-<ul>
-<li class="fragment"><img data-src="memes/Documents.jpg" class="absolute" style="top: 310px; left: 370px; width: 380px; height: 280px; "></li>
-</ul>
 </div>
 </section>
 <section id="total-de-repositórios" class="slide level2">
 <h2>Total de repositórios</h2>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1"></a>total[<span class="fu">findall</span>(<span class="fu">in</span>([<span class="st">"R"</span>, <span class="st">"Julia"</span>]), total[<span class="op">:</span>, <span class="op">:</span>language]), <span class="op">:</span>] <span class="op">|&gt;</span></span>
+<details>
+<summary>
+Código
+</summary>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1"></a>total[<span class="fu">findall</span>(<span class="fu">in</span>([<span class="st">"R"</span>, <span class="st">"Julia"</span>]), total[<span class="op">:</span>, <span class="op">:</span>language]), <span class="op">:</span>] <span class="op">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>df <span class="op">-&gt;</span> <span class="fu">bar</span>(df[<span class="op">:</span>, <span class="op">:</span>language], df[<span class="op">:</span>, <span class="op">:</span>num_repos], g<span class="op">=</span>df[<span class="op">:</span>, <span class="op">:</span>language],</span>
 <span id="cb4-3"><a href="#cb4-3"></a>        fill<span class="op">=</span>[<span class="st">"#2B5FE9"</span>, <span class="st">"#AA30FF"</span>], legend<span class="op">=:</span>topleft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 
-</div>
-<img data-src="index_files/figure-revealjs/cell-10-output-1.svg" class="r-stretch"></section>
-<section id="issues-e-prs" class="slide level2">
-<h2>Issues e Prs</h2>
+<img data-src="index_files/figure-revealjs/cell-8-output-1.svg" class="r-stretch"></section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<details>
+<summary>
+Código
+</summary>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1"></a>p1 <span class="op">=</span> <span class="fu">fav_langs</span>(pr, [<span class="st">"R"</span>,<span class="st">"Julia"</span>]) <span class="op">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name], title <span class="op">=</span> <span class="st">"Pull Requests"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>p2 <span class="op">=</span> <span class="fu">fav_langs</span>(issues, [<span class="st">"R"</span>,<span class="st">"Julia"</span>]) <span class="op">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name], title <span class="op">=</span> <span class="st">"Issues"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="fu">plot</span>(p1,p2,layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 
-<img data-src="index_files/figure-revealjs/cell-11-output-1.svg" class="r-stretch"></section></section>
+<img data-src="index_files/figure-revealjs/cell-9-output-1.svg" class="r-stretch"></section></section>
 <section>
 <section id="mas-e-python" class="title-slide slide level1 center">
 <h1>Mas e Python?</h1>
 
 </section>
-<section id="section" class="slide level2">
+<section id="section-4" class="slide level2">
 <h2></h2>
 
-<img data-src="index_files/figure-revealjs/cell-12-output-1.svg" class="r-stretch"><div class="footer">
+<img data-src="index_files/figure-revealjs/cell-10-output-1.svg" class="r-stretch"><div class="footer">
 <p>Uma imagem vale mais que mil palavras</p>
 </div>
 </section>
@@ -769,11 +795,15 @@ Código
 <li>Devo aprender Julia?</li>
 </ul>
 <div>
-
+<ul>
+<li class="fragment"><img data-src="memes/Documents.jpg" class="absolute" style="top: 310px; left: 370px; width: 380px; height: 280px; "></li>
+</ul>
 </div>
-<p><img data-src="https://i.pinimg.com/originals/0f/a0/94/0fa09464c343885355e6aa4d2f4a88b5.gif" class="absolute" style="top: 330px; left: 370px; width: 380px; height: 250px; "></p>
+<div class="footer">
+<p>Boa noite perolas!</p>
+</div>
 </section>
-<section id="section-1" class="slide level2" data-background-iframe="https://docs.julialang.org/en/v1/" data-background-interactive="true">
+<section id="section-5" class="slide level2" data-background-iframe="https://docs.julialang.org/en/v1/" data-background-interactive="true">
 <h2></h2>
 <p><img data-src="https://juliadatascience.io/im/let_fig_front_cover_Use_lazy_loading_to_keep_homepage_speed_high_.svg" class="absolute" style="top: 90px; right: 10px; width: 280px; height: 350px; "></p>
 <div class="footer footer-default">
@@ -959,7 +989,7 @@ Código
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1220,
+        width: 1210,
 
         height: 700,
 

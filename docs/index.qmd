@@ -9,7 +9,7 @@ format:
         chalkboard: true
         transition: fade
         controls: true
-        width: 1220
+        width: 1210
         height: 700
 
 ---
@@ -39,7 +39,16 @@ format:
 ![](http://31.media.tumblr.com/17fea920ff36ef4f5b877d5216a7aad9/tumblr_mo9xje8zZ41qcbiufo1_1280.gif){.absolute top=410 right=300 width="450" height="850"}
 
 ## Introdução 
- 
+* Base de dados disponível no [kaggle](https://www.kaggle.com/datasets/isaacwen/github-programming-languages-data)
+
+<br />
+
+* Três datasets 
+
+<br />
+
+
+* Quais linguagens tem mais destaque dentro do GitHub?
 
 ```{julia}
 
@@ -60,13 +69,28 @@ issues = DataFrame(CSV.File("data/issues.csv"));
 total = DataFrame(CSV.File("data/repos.csv"));
 ```
 
+## Conceitos
+
+-  Repositório
+
+<br />
+
+- Issues
+
+<br />
+
+* Pull Request (pr)
 
 
-## Repos DataSet
+
+
+
+
+## Datasets
 
 :::: {.columns}
 
-::: {.column width="60%"}
+::: {.column width="59%"}
 
 $\rightarrow$ Pull requests
 ```{julia}
@@ -74,7 +98,7 @@ pretty_table(pr |> df -> first(df, 7); backend = Val(:html), header = (names(pr)
 ```
 :::
 
-::: {.column width="40%"}
+::: {.column width="41%"}
 $\rightarrow$ Repositórios
 ```{julia}
 pretty_table(total  |> df -> first(df, 7); backend = Val(:html), header = (names(total)),tf=tf_html_dark)
@@ -84,35 +108,18 @@ pretty_table(total  |> df -> first(df, 7); backend = Val(:html), header = (names
 ::::
 
 
+## Disclaimer
 
-```{julia}
-#pretty_table(pr |> df -> first(df, 7); backend = Val(:html), header = (names(pr)))
-```
 
-## total DataSet
+- Nem tudo funcionou como deveria funcionar
 
-```{julia}
-#pretty_table(total  |> df -> first(df, 7); backend = Val(:html), header = (names(total)))
-```
+::: {.incremental}
+- ![](memes/ggplot.jpg){.absolute top=210 right=250 width="480" height="450"}
+:::
 
 
 
 
-## Conceitos
-
--  Repositório
-
-<br />
-
-- Issues:
-
-<br />
-
-* Pull Request (pr)
-
-
-
-![](memes/ggplot.jpg){.absolute top=130 right=10 width="480" height="450"}
 
 
 
@@ -120,10 +127,10 @@ pretty_table(total  |> df -> first(df, 7); backend = Val(:html), header = (names
 
 # Linguagens Gerais
 - Top 5 em quantidade de repositórios 
-- Issues e pr ao longo do tempo
+- Média de issues e pr ao longo do tempo
 
 
-## Top 5 
+## 
 
 
 <details>
@@ -160,7 +167,7 @@ pretty_table(total  |> df -> first(df, 7); backend = Val(:html), header = (names
        df -> bar!(df[:,:language] , df[:,:num_repos], legend=false)
 ```
 
-## Médias
+## 
 <details>
   <summary markdown="span">Código</summary>
 
@@ -188,7 +195,7 @@ plot(p1,p2,layout= (1,2))
 ```
 
 
-## Algumas linguagens 
+## 
 
 <details>
   <summary markdown="span">Código</summary>
@@ -197,7 +204,7 @@ plot(p1,p2,layout= (1,2))
 ```julia
 
 fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |> 
-      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name], formatter=identity)
 ```
 
 </details>
@@ -208,7 +215,7 @@ fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |>
       df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
 ```
 
----
+
 # Linguagem "para" Dados
 
 ## Linguagem Julia
@@ -241,24 +248,45 @@ fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |>
 
 <br />
 
-- ![](memes/Documents.jpg){.absolute top=310 left=370 width="380" height="280"}
 
 :::
 
 
 ## Total de repositórios
+<details>
+  <summary markdown="span">Código</summary>
+
+
+```julia
+total[findall(in(["R", "Julia"]), total[:, :language]), :] |>
+df -> bar(df[:, :language], df[:, :num_repos], g=df[:, :language],
+        fill=["#2B5FE9", "#AA30FF"], legend=:topleft)
+```
+</details>
 
 ```{julia}
-#| echo: true
 total[findall(in(["R", "Julia"]), total[:, :language]), :] |>
 df -> bar(df[:, :language], df[:, :num_repos], g=df[:, :language],
         fill=["#2B5FE9", "#AA30FF"], legend=:topleft)
 ```
 
 
-## Issues e Prs
+## 
+
+<details>
+  <summary markdown="span">Código</summary>
 
 
+```julia
+p1 = fav_langs(pr, ["R","Julia"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name], title = "Pull Requests")
+p2 = fav_langs(issues, ["R","Julia"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name], title = "Issues")
+
+plot(p1,p2,layout=(1,2))
+
+```
+</details>
 
 ```{julia}
 p1 = fav_langs(pr, ["R","Julia"]) |> 
@@ -283,7 +311,7 @@ p1 = fav_langs(pr, ["R","Julia","Python"]) |>
 p2 = fav_langs(issues, ["R","Julia", "Python"]) |> 
       df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
 
-plot(p1,p2,layout=(1,2))
+plot(p1, p2, layout=(1,2))
 
 ```
 
@@ -296,11 +324,13 @@ Uma imagem vale mais que mil palavras
 - Devo aprender Julia?
 
 ::: {.incremental}
-
+- ![](memes/Documents.jpg){.absolute top=310 left=370 width="380" height="280"}
 :::
-![](https://i.pinimg.com/originals/0f/a0/94/0fa09464c343885355e6aa4d2f4a88b5.gif){.absolute top=330 left=370 width="380" height="250"}
 
 
+::: footer
+Boa noite perolas!
+:::
 
 
 ## {background-iframe="https://docs.julialang.org/en/v1/" background-interactive="true"}
