@@ -405,7 +405,7 @@
 </ul>
 <p><br></p>
 <ul>
-<li class="fragment">Linguagens para “Dados”</li>
+<li class="fragment">Linguagens “para” Dados</li>
 </ul>
 <p><br></p>
 <ul>
@@ -416,7 +416,7 @@
 <section>
 <section id="introdução-e-conceitos" class="title-slide slide level1 center">
 <h1>Introdução e conceitos</h1>
-<p><img data-src="http://31.media.tumblr.com/17fea920ff36ef4f5b877d5216a7aad9/tumblr_mo9xje8zZ41qcbiufo1_1280.gif" class="absolute" style="top: 410px; right: 300px; width: 450px; height: 850px; "></p>
+<p><img data-src="https://gifimage.net/wp-content/uploads/2018/04/question-animated-gif-13.gif" class="absolute" style="top: 350px; right: 370px; width: 450px; height: 250px; "></p>
 </section>
 <section id="introdução" class="slide level2">
 <h2>Introdução</h2>
@@ -712,9 +712,23 @@ Código
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1"></a></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="fu">fav_langs</span>(pr, [<span class="st">"Java"</span>,<span class="st">"Python"</span>, <span class="st">"JavaScript"</span>, <span class="st">"Ruby"</span>, <span class="st">"PHP"</span>]) <span class="op">|&gt;</span> </span>
 <span id="cb3-3"><a href="#cb3-3"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name], formatter<span class="op">=</span>identity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="footer">
+<p>pull requests</p>
+</div>
 </details>
 
-<img data-src="index_files/figure-revealjs/cell-7-output-1.svg" class="r-stretch"></section></section>
+<img data-src="index_files/figure-revealjs/cell-7-output-1.svg" class="r-stretch"></section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<details>
+<summary>
+Código
+</summary>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">fav_langs</span>(issues, [<span class="st">"Java"</span>,<span class="st">"Python"</span>, <span class="st">"JavaScript"</span>, <span class="st">"Ruby"</span>, <span class="st">"PHP"</span>]) <span class="op">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+<img data-src="index_files/figure-revealjs/cell-8-output-1.svg" class="r-stretch"></section></section>
 <section>
 <section id="linguagem-para-dados" class="title-slide slide level1 center">
 <h1>Linguagem “para” Dados</h1>
@@ -756,36 +770,36 @@ Código
 <summary>
 Código
 </summary>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1"></a>total[<span class="fu">findall</span>(<span class="fu">in</span>([<span class="st">"R"</span>, <span class="st">"Julia"</span>]), total[<span class="op">:</span>, <span class="op">:</span>language]), <span class="op">:</span>] <span class="op">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>df <span class="op">-&gt;</span> <span class="fu">bar</span>(df[<span class="op">:</span>, <span class="op">:</span>language], df[<span class="op">:</span>, <span class="op">:</span>num_repos], g<span class="op">=</span>df[<span class="op">:</span>, <span class="op">:</span>language],</span>
-<span id="cb4-3"><a href="#cb4-3"></a>        fill<span class="op">=</span>[<span class="st">"#2B5FE9"</span>, <span class="st">"#AA30FF"</span>], legend<span class="op">=:</span>topleft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1"></a>total[<span class="fu">findall</span>(<span class="fu">in</span>([<span class="st">"R"</span>, <span class="st">"Julia"</span>]), total[<span class="op">:</span>, <span class="op">:</span>language]), <span class="op">:</span>] <span class="op">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>df <span class="op">-&gt;</span> <span class="fu">bar</span>(df[<span class="op">:</span>, <span class="op">:</span>language], df[<span class="op">:</span>, <span class="op">:</span>num_repos], g<span class="op">=</span>df[<span class="op">:</span>, <span class="op">:</span>language],</span>
+<span id="cb5-3"><a href="#cb5-3"></a>        fill<span class="op">=</span>[<span class="st">"#2B5FE9"</span>, <span class="st">"#AA30FF"</span>], legend<span class="op">=:</span>topleft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
-<img data-src="index_files/figure-revealjs/cell-8-output-1.svg" class="r-stretch"></section>
-<section id="section-3" class="slide level2">
+<img data-src="index_files/figure-revealjs/cell-9-output-1.svg" class="r-stretch"></section>
+<section id="section-4" class="slide level2">
 <h2></h2>
 <details>
 <summary>
 Código
 </summary>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1"></a>p1 <span class="op">=</span> <span class="fu">fav_langs</span>(pr, [<span class="st">"R"</span>,<span class="st">"Julia"</span>]) <span class="op">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name], title <span class="op">=</span> <span class="st">"Pull Requests"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3"></a>p2 <span class="op">=</span> <span class="fu">fav_langs</span>(issues, [<span class="st">"R"</span>,<span class="st">"Julia"</span>]) <span class="op">|&gt;</span> </span>
-<span id="cb5-4"><a href="#cb5-4"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name], title <span class="op">=</span> <span class="st">"Issues"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5"></a></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="fu">plot</span>(p1,p2,layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1"></a>p1 <span class="op">=</span> <span class="fu">fav_langs</span>(pr, [<span class="st">"R"</span>,<span class="st">"Julia"</span>]) <span class="op">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name], title <span class="op">=</span> <span class="st">"Pull Requests"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a>p2 <span class="op">=</span> <span class="fu">fav_langs</span>(issues, [<span class="st">"R"</span>,<span class="st">"Julia"</span>]) <span class="op">|&gt;</span> </span>
+<span id="cb6-4"><a href="#cb6-4"></a>      df <span class="op">-&gt;</span> <span class="fu">plot</span>(df[<span class="op">:</span>,<span class="op">:</span>year], df[<span class="op">:</span>,<span class="op">:</span>media], g <span class="op">=</span> df[<span class="op">:</span>,<span class="op">:</span>name], title <span class="op">=</span> <span class="st">"Issues"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="fu">plot</span>(p1,p2,layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
-<img data-src="index_files/figure-revealjs/cell-9-output-1.svg" class="r-stretch"></section></section>
+<img data-src="index_files/figure-revealjs/cell-10-output-1.svg" class="r-stretch"></section></section>
 <section>
 <section id="mas-e-python" class="title-slide slide level1 center">
 <h1>Mas e Python?</h1>
 
 </section>
-<section id="section-4" class="slide level2">
+<section id="section-5" class="slide level2">
 <h2></h2>
 
-<img data-src="index_files/figure-revealjs/cell-10-output-1.svg" class="r-stretch"><div class="footer">
+<img data-src="index_files/figure-revealjs/cell-11-output-1.svg" class="r-stretch"><div class="footer">
 <p>Uma imagem vale mais que mil palavras</p>
 </div>
 </section>
@@ -800,10 +814,10 @@ Código
 </ul>
 </div>
 <div class="footer">
-<p>Boa noite perolas!</p>
+<p>Boa noite pérolas!</p>
 </div>
 </section>
-<section id="section-5" class="slide level2" data-background-iframe="https://docs.julialang.org/en/v1/" data-background-interactive="true">
+<section id="section-6" class="slide level2" data-background-iframe="https://docs.julialang.org/en/v1/" data-background-interactive="true">
 <h2></h2>
 <p><img data-src="https://juliadatascience.io/im/let_fig_front_cover_Use_lazy_loading_to_keep_homepage_speed_high_.svg" class="absolute" style="top: 90px; right: 10px; width: 280px; height: 350px; "></p>
 <div class="footer footer-default">

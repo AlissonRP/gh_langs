@@ -25,7 +25,7 @@ format:
 
 <br />
 
-- Linguagens para "Dados"
+- Linguagens "para" Dados
 
 <br />
 
@@ -36,7 +36,7 @@ format:
 
 # Introdução e conceitos
 
-![](http://31.media.tumblr.com/17fea920ff36ef4f5b877d5216a7aad9/tumblr_mo9xje8zZ41qcbiufo1_1280.gif){.absolute top=410 right=300 width="450" height="850"}
+![](https://gifimage.net/wp-content/uploads/2018/04/question-animated-gif-13.gif){.absolute top=350 right=370 width="450" height="250"}
 
 ## Introdução 
 * Base de dados disponível no [kaggle](https://www.kaggle.com/datasets/isaacwen/github-programming-languages-data)
@@ -206,6 +206,9 @@ plot(p1,p2,layout= (1,2))
 fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |> 
       df -> plot(df[:,:year], df[:,:media], g = df[:,:name], formatter=identity)
 ```
+::: footer
+pull requests
+:::
 
 </details>
 
@@ -215,6 +218,24 @@ fav_langs(pr, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |>
       df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
 ```
 
+##
+
+<details>
+  <summary markdown="span">Código</summary>
+
+
+```julia
+fav_langs(issues, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+```
+
+
+</details>
+
+```{julia}
+fav_langs(issues, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |> 
+      df -> plot(df[:,:year], df[:,:media], g = df[:,:name])
+```
 
 # Linguagem "para" Dados
 
@@ -329,7 +350,7 @@ Uma imagem vale mais que mil palavras
 
 
 ::: footer
-Boa noite perolas!
+Boa noite pérolas!
 :::
 
 
