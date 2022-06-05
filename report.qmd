@@ -1,11 +1,11 @@
 ---
 title: "Linguagens de Programação"
+subtitle: no GitHub
 author: "Alisson Rosa"
-date: "5/22/2021"
 format: 
   pdf:
     number-sections: true
-    fig-width: 5.5
+    fig-width: 5.9
     fig-height: 2.8
     indent: 2m
     geometry:
@@ -93,7 +93,19 @@ Notamos que as top 3 linguagens são de desenvolvimento web, sendo elas JavaScri
        df -> bar!(df[:,:language] , df[:,:num_repos], legend=false)
 
 ```
-Por honestidade, devemos primeiro notar que R é uma linguagem nichada, portanto nunca foi esperado que fosse ter quantidade de repositórios próxima as linguagens anteriormente citadas, porém vale a título de curiosidade.
+Por honestidade, devemos primeiro notar que R é uma linguagem nichada, portanto nunca foi esperado que fosse ter quantidade de repositórios próxima as linguagens anteriormente citadas, porém vale a título de curiosidade.   
+Seguindo a mesma ideia, vamos analisar as top 5 linguagens que possuem mais prs e issues ao total. Pela @fig-plt notamos que o top 3 se mantém o mesmo  tanto pr e issues, entretanto para  prs PHP está no top 5 e em issues está no top 4, outra diferença é que Ruby aparece em prs ao invés de C$++$ que aparece nas issues.
+
+
+```{julia}
+#| fig-cap: "Comportamento médio  ao longo dos anos"
+#| label: fig-plt
+p1 = barh(pr, "#5310c8")
+p2 = barh(issues, "#0b08c0")
+           
+plot(p1,p2, layout=2, title=["Pr" "Issues"])
+```
+
 
 \section{Análise descritiva}
 É essencial começar avaliando o comportamento médio de prs e issues no gh ao longo dos anos. Notamos alguns pontos fundamentais, tanto prs e issues crescem até atingir seu ápice em 2017, mas os prs diferentes das issues não descressem de forma monótona depois de 2017.
@@ -101,13 +113,13 @@ Por honestidade, devemos primeiro notar que R é uma linguagem nichada, portanto
 ```{julia}
 #| fig-cap: "Comportamento médio  ao longo dos anos"
 #| label: fig-plot
-p1 = @pipe top_5(issues,:year) |> 
-           areaplot(_[:,:year],_[:,:media], title="issues", label=false, legend=:topleft)
-p2 = @pipe top_5(pr,:year)  |>
+p1 = @pipe top_5(pr,:year)  |>
            areaplot(_[:,:year],_[:,:media], title="pr", color = "#ff4933", 
            label=false, legend=:topleft)
+p2 = @pipe top_5(issues,:year) |> 
+           areaplot(_[:,:year],_[:,:media], title="issues", label=false, legend=:topleft)
            
-plot(p1,p2,layout= (1,2))
+plot(p1,p2,layout=2)
 ```
 Mas na @fig-plot, avaliamos o comportamento das issues e prs no gh de forma global, independente da linguagem, será que as linguagens individualmente se comportam da mesma maneira? É isso que veremos nas seções seguintes
 
@@ -133,22 +145,18 @@ fav_langs(issues, ["Java","Python", "JavaScript", "Ruby", "PHP"]) |>
 Notamos portanto, um comportamento bem claro, prs cresceram até atingir seu apogeu em 2017, aonde depois, em geral tendem a cair, as únicas  linguagens das estudadas que recuperaram crescimento foram Java e Python. Como vimos antes na  análise global, as issues somente decrescem depois de 2017 e o mesmo aconteceu individualmente para as linguagens estudadas aqui.
 \section{Linguagens para Dados}
 Nessa seção vamos avaliar o comportamento especificamente de R e Julia, que são duas das três principais linguagens para trabalhar com dados no momento.
-Vimos que issues decrescem a partir de 2017 monotonicamente de forma geral e também para as linguagens estudadas nessa subseção, a portanto nos informa quais as 5 linguagens mantiveram mais anos de crescimento após 2017
+Vimos que issues decrescem a partir de 2017 monotonicamente de forma geral e também para as linguagens estudadas nessa subseção, a fig portanto nos informa quais as 5 linguagens mantiveram mais anos de crescimento após 2017
 
 ```{julia}
 lagged = @pipe issues[issues.year.>2016, :] |>
                groupby(_, [:year, :name]) |>
-               combine(_, :count => (mean => :media)) |>
+               combine(_, :count => mean) |>
                groupby(_, :name) |>
-               combine(_, :media => (lag => :lag));
-lagged[:, :lag] = @pipe ifelse.(lagged[:, :lag] .> 0, 1, 0);
-@pipe lagged |>
-      groupby(_, :name) |>
-      combine(_, :lag => sum) |>
-      sort(_, :lag_sum, rev=true) |>
-      first(_, 5)
+               combine(_, :count_mean => (lag => :count));
+lagged[:, :count] =  ifelse.(lagged[:, :count] .> 0, 1, 0);
+top_5_count(lagged, :name)
 ```
-Temos portanto 3 das 5 linguagens que tiveram 3 anos de crescimento de issues se comparado ao ano anterior, ou seja: nenhuma delas manteou-se crescente desde o começo.
+Das 5  linguagens 3 tiveram 3 anos de crescimento de issues se comparado ao ano anterior, ou seja: nenhuma delas manteou-se crescente desde o começo.
 
 \subsection{Breve Introdução}
 R é uma implementação open-source da Linguagem [S](https://en.wikipedia.org/wiki/S_(programming_language)), teve seu lançamento oficial em 1995, sendo desenvolvida por [Ross Ihaka](https://en.wikipedia.org/wiki/Ross_Ihaka) e [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician)), sendo assim seu nome "R" vem da letra inicial do seus criadores e também do dialeto com "S". R tem suas raízes na estatística computacional, passou seus 10 primeiros anos sendo primariamente uma linguagem acadêmica,  mas depois do desenvolvimento de  pacotes como `tidyverse` se tornou um ambiente propicio para ciência de dados. 
@@ -157,6 +165,7 @@ O projeto da linguagem Julia teve seu início em meados de 2009, muitos dos seus
 Vamos começar avaliando a quantidade total de repositórios para cada uma das duas linguagens.  
 
 ```{julia}
+#| fig-cap: "Quantidade de repositórios disponíveis para R e Julia"
 total[findall(in(["R", "Julia"]), total[:, :language]), :] |>
 df -> bar(df[:, :language], df[:, :num_repos], g=df[:, :language],
         fill=["#2B5FE9", "#AA30FF"])
