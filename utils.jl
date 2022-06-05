@@ -5,6 +5,7 @@ default(formatter=identity, tickfontsize=7, titlefontsize=12,
     legend=:topleft)
 using Statistics
 using Pipe: @pipe
+using Printf
 
 top_5 = function (df::DataFrame, variable::Symbol)
     @pipe df |>
@@ -29,9 +30,24 @@ top_5_count = function (df::DataFrame, var::Symbol)
           first(_, 5)
 end
 
-barh = function (df::DataFrame, lc::String)
+barh = function (df::DataFrame, lc::Vector)
     x = top_5_count(df, :name)[:, :total]
     y = top_5_count(df, :name)[:, :name]
-    bar(x, orientation=:h, yticks=(1:5, y), legend=false, yflip=true, fill=["#f3ff33", "#337aff",
-            "#ce640c", "#b60000", lc], xticks=0:2*10^6:7.5*10^6)
+    bar(x, orientation=:h, yticks=(1:5, y), legend=false, yflip=true, fill=vcat(["#f3ff33", "#337aff",
+                "#ce640c"], lc), xticks=0:2*10^6:7.5*10^6)
+end
+
+
+
+using Printf, Plots
+super_bar = function (df::DataFrame, v1::Symbol, v2::Symbol)
+    x = df[:, v1]
+    x1 = [0.5:1:(x|>length);]
+    y = df[:, v2]
+    str = [(@sprintf("%.0f", yi), 9) for yi in y]
+    (ymin, ymax) = extrema(y)
+    dy = 0.04 * (ymax - ymin)
+    Plots.bar(x, y, title="SUPER!", legend=false)
+    annotate!(x1, y .+ dy, str, ylim=(0, ymax + 2dy))
+
 end
