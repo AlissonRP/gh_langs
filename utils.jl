@@ -40,14 +40,15 @@ end
 
 
 using Printf, Plots
-super_bar = function (df::DataFrame, v1::Symbol, v2::Symbol)
+super_bar = function (df::DataFrame, v1::Symbol, v2::Symbol, colors::Vector)
     x = df[:, v1]
     x1 = [0.5:1:(x|>length);]
     y = df[:, v2]
-    str = [(@sprintf("%.0f", yi), 9) for yi in y]
+    str = [(@sprintf("%.0f", yi), 8) for yi in y]
     (ymin, ymax) = extrema(y)
-    dy = 0.04 * (ymax - ymin)
-    Plots.bar(x, y, title="SUPER!", legend=false)
+    dy = 0.05 * (ymax - ymin)
+    Plots.bar(x, y, legend=false, f = colors)
     annotate!(x1, y .+ dy, str, ylim=(0, ymax + 2dy))
 
 end
+
