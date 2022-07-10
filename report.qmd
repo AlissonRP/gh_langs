@@ -8,6 +8,7 @@ format:
       text: |
         \usepackage{float}
     number-sections: true
+    keep-tex: true
     fig-width: 5.9
     fig-height: 2.9
     indent: 2m
@@ -181,7 +182,7 @@ Go & 2\\
 \end{table}
 
 
-Das 5  linguagens, 3 tiveram 3 anos de crescimento de issues se comparado ao ano anterior, ou seja: **nenhuma** linguagem permaneceu crescendo constantemente em issues após 2017.
+Das 5  linguagens, 3 tiveram 3 anos de crescimento de issues se comparado ao ano anterior, ou seja: **nenhuma** linguagem permaneceu somente crescendo  em issues após 2017.
 \section{Linguagens para Dados}
 Nessa seção vamos avaliar o comportamento especificamente de R e Julia, que são duas das três principais linguagens para trabalhar com dados no momento.
 
